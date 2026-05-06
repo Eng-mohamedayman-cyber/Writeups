@@ -58,29 +58,6 @@ Privilege Escalation is essential to gain **full system control**.
 
 ---
 
-## 🧾 Notes
-
-* Privilege Escalation is a **post-exploitation phase**
-* Always check for:
-
-  * SUID binaries
-  * Misconfigured services
-  * Weak permissions
-  * Kernel exploits
-
----
-
-## 📚 Next Steps
-
-* Practice Linux PrivEsc rooms on TryHackMe
-* Learn common enumeration tools:
-
-  * `linpeas`
-  * `linenum`
-  * `ps`, `sudo -l`, `find`
-
----
-
 ## 👨‍💻 Author
 
 **Mohamed**
