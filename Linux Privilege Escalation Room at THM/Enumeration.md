@@ -32,10 +32,10 @@ Automated tools help speed up the process and uncover common misconfigurations q
 * **run LinPeas.sh**
 
 
-![img](screenshots/Manual.png)
-![img](screenshots/Manual.png)
-![img](screenshots/Manual.png)
-![img](screenshots/Manual.png)
+![img](screenshots/locate_linpeas.png)
+![img](screenshots/simple_server.png)
+![img](screenshots/dir_have_perm(777).png)
+![img](screenshots/run_linpeas.png)
 
 ---
 
