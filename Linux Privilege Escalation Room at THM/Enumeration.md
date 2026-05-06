@@ -25,7 +25,11 @@ Automated tools help speed up the process and uncover common misconfigurations q
 * **make simple server to trasfer the LinPeas.sh to victim machine**
 
 * **From Victim Machine :**
-* **find dirctory **
+* **find directory i can write,read,and execute such as /tmp  **
+* **get LinPeas.sh in victim machine by "wget" command**
+* **show permssion of the recive file we will find it do not have executable aption**
+* **change his permssion by "chmod" command**
+* **run LinPeas.sh**
 
 
 ![img](screenshots/Manual.png)
