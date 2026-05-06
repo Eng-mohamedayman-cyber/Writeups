@@ -18,6 +18,21 @@ Automated tools help speed up the process and uncover common misconfigurations q
 
 > ✅ I preferred using **LinPeas** because it is frequently updated and very convenient to use.
 
+* **LinPeas**
+
+* **From My Machine :**
+* **Find LinPeas tool in my kali**
+* **make simple server to trasfer the LinPeas.sh to victim machine**
+
+* **From Victim Machine :**
+* **find dirctory **
+
+
+![img](screenshots/Manual.png)
+![img](screenshots/Manual.png)
+![img](screenshots/Manual.png)
+![img](screenshots/Manual.png)
+
 ---
 
 ### 🧠 2. Manual Enumeration
