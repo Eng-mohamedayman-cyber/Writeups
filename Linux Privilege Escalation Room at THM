@@ -37,3 +37,5 @@ uname -a: Checked the Kernel version for potential exploits.
 cat /proc/version : may give you information on the kernel version and additional data such as whether a compiler (e.g. GCC) is installed.
 cat /etc/issue : This file usually contains some information about the operating system but can easily be customized or changed. 
 cat /etc/passwd file can be an easy way to discover users on the system.
+history : command can give us some idea about the target system and, albeit rarely, have stored information such as passwords or usernames.
+ifconfig : command will give us information about the network interfaces of the system. 
