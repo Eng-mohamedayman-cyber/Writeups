@@ -16,3 +16,11 @@ Enabling persistence
 Changing the privilege of existing (or new) users
 Execute any administrative command
 
+Enumeration have two approach :
+                                  1-Automated Enumeration     2-Manual Enumeration
+At Automated there are many tools : 
+LinPeas 
+LinEnum 
+LES (Linux Exploit Suggester)
+Linux Smart Enumeration
+Linux Priv Checker
