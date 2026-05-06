@@ -46,6 +46,7 @@ Manual enumeration is essential to deeply understand the system and catch things
 * `cat /etc/passwd` → Lists users on the system
 * `history` → May reveal sensitive commands or credentials
 
+![img](screenshots/Manual.png)
 ---
 
 #### 🌐 Network Information:
