@@ -24,6 +24,9 @@ Automated tools help speed up the process and uncover common misconfigurations q
 * **Find LinPeas tool in my kali**
 * **make simple server to trasfer the LinPeas.sh to victim machine**
 
+![img](screenshots/locate_linpeas.png)
+![img](screenshots/simple_server.png)
+
 * **From Victim Machine :**
 * **find directory i can write,read,and execute such as /tmp  **
 * **get LinPeas.sh in victim machine by "wget" command**
@@ -32,8 +35,6 @@ Automated tools help speed up the process and uncover common misconfigurations q
 * **run LinPeas.sh**
 
 
-![img](screenshots/locate_linpeas.png)
-![img](screenshots/simple_server.png)
 ![img](screenshots/dir_have_perm(777).png)
 ![img](screenshots/run_linpeas.png)
 
