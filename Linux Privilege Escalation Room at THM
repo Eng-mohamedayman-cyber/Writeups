@@ -39,3 +39,4 @@ cat /etc/issue : This file usually contains some information about the operating
 cat /etc/passwd file can be an easy way to discover users on the system.
 history : command can give us some idea about the target system and, albeit rarely, have stored information such as passwords or usernames.
 ifconfig : command will give us information about the network interfaces of the system. 
+find : command is used to locate files with specific permissions, ownerships, or configurations that can be exploited.
