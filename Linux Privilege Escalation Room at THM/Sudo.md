@@ -9,6 +9,6 @@ In this privilege escalation technique, we search for command can use sude witho
 
 * **We find 3 bins :**
 * **go to site : " https://gtfobins.linuxsec.org/ " and search exploit code to use it.**
-* **search for " find " exploit code for this bin ,and we find " sudo find . -exec /bin/sh \; -quit "**
+* **search for " find " exploit code for this bin ,and we find " sudo find . -exec /bin/sh \\ ;  -quit "**
 
 ![img](screenshots/sudo/get_root_by_sudo-l.png)
