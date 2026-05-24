@@ -22,4 +22,9 @@ In this privilege escalation technique, we search for command can use sude witho
 
 ![img](screenshots/sudo/inside_less.png)
 
+* **Then click enter ,now uou have root privilege**
+
+![img](screenshots/sudo/get_root_by__less.png)
+
+
 
