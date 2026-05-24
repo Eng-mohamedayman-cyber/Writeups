@@ -13,6 +13,7 @@ In this privilege escalation technique, we search for command can use sude witho
 
 ![img](screenshots/sudo/get_root_by_sudo-l.png)
 
+---
 
 * **search for " less " exploit code for this bin ,and we find " sudo less /etc/hosts "**
 
@@ -25,6 +26,8 @@ In this privilege escalation technique, we search for command can use sude witho
 * **Then click enter ,now uou have root privilege**
 
 ![img](screenshots/sudo/get_root_by_less.png)
+
+---
 
 * **search for " nano " exploit code for this bin ,and we find " sudo nano "**
 
