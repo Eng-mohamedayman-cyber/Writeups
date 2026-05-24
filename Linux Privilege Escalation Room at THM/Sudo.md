@@ -1,15 +1,44 @@
-# Privilege Escalation: Sudo
+# 🔐 Privilege Escalation: Sudo
 
-In this privilege escalation technique, we search for command can use sude without password and find exploit code from GTFObins that can be used to get root privilege.
+This privilege escalation technique focuses on abusing commands that can be executed with `sudo` privileges without requiring a password.
+
+We can identify these commands and search for exploitation methods using the GTFOBins website.
 
 ---
-* **using command " sudo -l " : to know bins and found it.**
+
+## 🔍 Checking Sudo Permissions
+
+We start by listing commands that can be executed with `sudo`:
+
+```bash
+sudo -l
+```
 
 ![img](screenshots/sudo/sudo-l.png)
 
-* **We find 3 bins :**
-* **go to site : " https://gtfobins.linuxsec.org/ " and search exploit code to use it.**
-* **search for " find " exploit code for this bin ,and we find " sudo find . -exec /bin/sh \\ ;  -quit "**
+## 📌 Discovered Binaries
+
+The system allows running the following binaries as root:
+
+- `find`
+- `less`
+- `nano`
+
+We can search for privilege escalation techniques for these binaries on:
+
+https://gtfobins.linuxsec.org/
+
+---
+
+## 🚀 Exploiting `find`
+
+GTFOBins provides the following command:
+
+```bash
+sudo find . -exec /bin/sh \; -quit
+```
+
+This command spawns a root shell.
 
 ![img](screenshots/sudo/get_root_by_sudo-l.png)
 
