@@ -62,8 +62,7 @@ Inside `less`, execute:
 
 ![img](screenshots/sudo/inside_less.png)
 
-This spawns a root shell
-After pressing Enter, root access is obtained.
+Pressing Enter executes the command, spawning a root shell.
 
 ![img](screenshots/sudo/get_root_by_less.png)
 
