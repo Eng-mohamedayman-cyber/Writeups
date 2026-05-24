@@ -28,7 +28,17 @@ In this privilege escalation technique, we search for command can use sude witho
 
 * **search for " nano " exploit code for this bin ,and we find " sudo nano "**
 
+![img](screenshots/sudo/sudo_nano.png)
 
+* **Then click ^R^X To open "command to execute : "**
 
+![img](screenshots/sudo/nano_execute_command.png)
 
+* **Now write " reset; sh 1>&0 2>&0 "**
+
+![img](screenshots/sudo/exploit_command_nano.png)
+
+* **You have root privilege inside nano page**
+
+![img](screenshots/sudo/get_root_by_nano.png)
 
