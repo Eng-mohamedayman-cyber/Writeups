@@ -5,4 +5,7 @@ you know that files can have read, write, and execute permissions. These are giv
 ---
 
 * **To find file with SUID permission you use this command :**
-  find / -type f -perm -4000 2>/dev/null
+
+```bash
+find / -type f -perm -4000 2>/dev/null
+```
