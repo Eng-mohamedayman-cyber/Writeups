@@ -37,7 +37,7 @@ The `base64` binary can be abused to read restricted files such as `/etc/shadow`
 To decode Base64 content, we use:
 
 ```bash
-| base64 --decode
+base64 <file> | base64 --decode
 ```
 
 ---
