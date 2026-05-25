@@ -9,3 +9,7 @@ you know that files can have read, write, and execute permissions. These are giv
 ```bash
 find / -type f -perm -4000 2>/dev/null
 ```
+
+* **we find base64 as SUID in owner user "rws"**
+* **will use this bin to read shadow file and get copy from it**
+* **use john to undecription the hash of password**
