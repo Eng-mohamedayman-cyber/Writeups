@@ -1,42 +1,87 @@
 # 🔐 Privilege Escalation: SUID
 
-you know that files can have read, write, and execute permissions. These are given to users within their privilege levels. This changes with SUID (Set-user Identification) and SGID (Set-group Identification). These allow files to be executed with the permission level of the file owner or the group owner
+Files in Linux normally have read, write, and execute permissions based on the current user's privilege level.
+
+However, SUID (Set User ID) and SGID (Set Group ID) are special permissions that allow a file to run with the privileges of the file owner or group owner.
+
+This can sometimes be abused to gain unauthorized access or escalate privileges.
 
 ---
 
-* **To find file with SUID permission you use this command :**
+## 🔍 Finding SUID Files
+
+To search for files with the SUID permission set, use:
 
 ```bash
 find / -type f -perm -4000 2>/dev/null
 ```
-![img](screenshots/SUID/result_SUID.png)
 
-* **we find base64 as SUID in owner user "rws"**
+![SUID files](screenshots/SUID/result_SUID.png)
 
-![img](screenshots/SUID/base64.png)
+---
 
-* **will use this bin to read shadow file and get copy from it**
+## 📌 Discovering `base64`
 
-![img](screenshots/SUID/base64_shadow.png)
+During enumeration, we discovered that the `base64` binary has the SUID bit enabled.
 
-* **make file and copy this hash**
+The `s` in `rws` indicates that the file runs with the owner's privileges.
 
-![img](screenshots/SUID/file_hash.png)
-![img](screenshots/SUID/hash_copy.png)
+![base64 SUID](screenshots/SUID/base64.png)
 
-* **use john to undecription the hash of password**
+---
 
-![img](screenshots/SUID/john_get_passwd.png)
+## 🚀 Reading Restricted Files
 
-* **Now you can switch user**
+The `base64` binary can be abused to read restricted files such as `/etc/shadow`.
+
+To decode Base64 content, we use:
+
+```bash
+--decode
+```
+
+---
+
+## 📂 Reading the Shadow File
+
+We used the SUID-enabled `base64` binary to read the shadow file and obtain password hashes.
+
+![shadow file](screenshots/SUID/base64_shadow.png)
+
+---
+
+## 🧾 Saving the Hash
+
+We created a file and copied the password hash into it.
+
+![create hash file](screenshots/SUID/file_hash.png)
+
+![copy hash](screenshots/SUID/hash_copy.png)
+
+---
+
+## 🔓 Cracking the Password Hash
+
+Using `john`, we cracked the password hash to recover the user's password.
+
+![john crack](screenshots/SUID/john_get_passwd.png)
+
+---
+
+## 👤 Switching User
+
+After recovering the password, we switched to the target user:
+
 ```bash
 su gerryconway
 ```
 
-![img](screenshots/SUID/change_user.png)
+![switch user](screenshots/SUID/change_user.png)
 
-* **find flag and read it by base64**
+---
 
-![img](screenshots/SUID/get_flag.png)
+## 🏁 Capturing the Flag
 
+Finally, we located the flag and used `base64` to read it.
 
+![get flag](screenshots/SUID/get_flag.png)
