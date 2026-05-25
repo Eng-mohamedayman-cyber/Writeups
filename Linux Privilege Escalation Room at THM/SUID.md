@@ -69,7 +69,7 @@ We created a file and copied the password hash into it.
 Using `john`, we cracked the password hash to recover the user's password.
 
 ```bash
-john --wordlist=/usr/share/wordlists/rockyou.txt hash
+john --wordlist=/usr/share/wordlists/rockyou.txt myhash
 ```
 
 ![john crack](screenshots/SUID/john_get_passwd.png)
