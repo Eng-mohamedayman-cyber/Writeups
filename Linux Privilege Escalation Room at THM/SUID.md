@@ -28,3 +28,15 @@ find / -type f -perm -4000 2>/dev/null
 
 ![img](screenshots/SUID/john_get_passwd.png)
 
+* **Now you can switch user**
+```bash
+su gerryconway
+```
+
+![img](screenshots/SUID/change_user.png)
+
+* **find flag and read it by base64**
+
+![img](screenshots/SUID/get_flag.png)
+
+
