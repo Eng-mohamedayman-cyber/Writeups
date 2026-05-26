@@ -26,8 +26,7 @@ During enumeration, we found two interesting binaries:
 - `vim`
 - `view`
 
-Both binaries have capabilities that allow privilege escalation through `setuid`.
-
+Both binaries have the cap_setuid+ep capability assigned, which allows them to manipulate user IDs and perform setuid operations.
 ---
 
 ## 🚀 Exploiting `vim`
