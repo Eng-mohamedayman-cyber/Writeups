@@ -35,4 +35,7 @@ other methods is
 
 * **then**
 
+```bash
+/tmp/rootbash -p
+```
 ![img](screenshots/capabilities/get_root2.png)
