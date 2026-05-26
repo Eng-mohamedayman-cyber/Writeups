@@ -39,4 +39,4 @@ then from your machine use net cat to connect the victim machine
 nc -nlvp port
 ```
 
-![img](screenshots/crontab/get_root_crons.png)
+![img](screenshots/crontab/get_root_cron.png)
