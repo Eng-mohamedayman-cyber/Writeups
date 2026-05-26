@@ -53,6 +53,7 @@ If the file does not exist, create it with the same name.
 ## ✍️ Writing the Reverse Shell Payload
 
 We added the following reverse shell payload:
+
 Even though the file has a `.py` extension, Linux relies on the **Shebang (`#!`)** header to determine the interpreter rather than the file extension. Therefore, we can safely overwrite it with a standard Bash reverse shell payload:
 
 ```bash
