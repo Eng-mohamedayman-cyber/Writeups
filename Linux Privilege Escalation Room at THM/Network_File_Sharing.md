@@ -11,8 +11,6 @@ cat /etc/exports
 
 ![img](screenshots/NFS/know_nfs_victim.png)
 
-it must include " no_root_squash " to can exploit it
-
 ---
 
 to know from your machine use :
@@ -21,3 +19,19 @@ showmount -e <IP_Target>
 ```
 
 ![img](screenshots/NFS/know_nfs_my_machine.png)
+
+---
+it must include " no_root_squash " to can exploit it
+
+---
+
+to connect my file with this file we use :
+
+```bash
+sudo mount -o rw <IP_Target>:<Path_of_NFS> <My_Path>
+```
+example :
+
+```bash
+sudo mount -o rw 10.114.144.62:/tmp /tmp/nfs_mount
+```
