@@ -42,7 +42,7 @@ go to this path
 
 read the file thm.py , we will find uncomlete path "thm" in the code ,test file is compiled file from thm.py
 
-![img](screenshots/PATH/uncomlete_path.png)
+![img](screenshots/PATH/uncomplete_path.png)
 
 go to tmp and create file have same name "thm", that recalled by " test " file that run with sudo permission 
 write exploit code in thm file
@@ -54,6 +54,7 @@ cp /bin/bash /tmp/rootbash;chmod +s /tmp/rootbash
 change thm file permission to by exeutable
 
 ![img](screenshots/PATH/create_file_chmod.png)
+
 ![img](screenshots/PATH/exploit_code.png)
 
 run " test " file 
