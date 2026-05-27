@@ -122,7 +122,7 @@ Execute the vulnerable `test` binary:
 
 This creates a SUID-enabled bash binary named `rootbash`.
 
-![img](screenshots/PATH/new_file_with_sudo.png)
+![img](screenshots/PATH/new_file_with_suid.png)
 
 ---
 ## 👑 Getting Root Access
