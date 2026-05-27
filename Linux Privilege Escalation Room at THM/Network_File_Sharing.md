@@ -78,3 +78,8 @@ sudo chmod +s /tmp/nfs_mount/nfs
 
 ---
 
+from victim machine go to tmp and run it 
+
+![img](screenshots/NFS/file_suid_root.png)
+![img](screenshots/NFS/get_root_nfs.png)
+
