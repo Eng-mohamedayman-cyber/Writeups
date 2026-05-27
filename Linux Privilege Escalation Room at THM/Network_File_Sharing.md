@@ -23,6 +23,12 @@ showmount -e <IP_Target>
 ---
 it must include " no_root_squash " to can exploit it
 
+in this case have three file :
+
+/home/backup *(rw,sync,insecure,no_root_squash,no_subtree_check)
+/tmp *(rw,sync,insecure,no_root_squash,no_subtree_check)
+/home/ubuntu/sharedfolder *(rw,sync,insecure,no_root_squash,no_subtree_check)
+
 ---
 
 to connect my file with this file we use :
