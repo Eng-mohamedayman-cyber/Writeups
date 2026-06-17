@@ -34,7 +34,7 @@ Since web services were available, the next step was to investigate the website.
 
 After opening the target in a browser, the homepage displayed only a video and a message inspired by the Mr. Robot series.
 
-![Homepage](Screenshots/homepage.png)
+![Homepage](Screenshots/http_Of_IP.png)
 
 Although nothing immediately useful was visible, hidden files and directories often contain valuable information.
 
@@ -52,7 +52,7 @@ Alternatively:
 gobuster dir -u http://<TARGET_IP> -w /usr/share/wordlists/dirb/common.txt
 ```
 
-![Dirb Results](Screenshots/dirb.png)
+![Dirb Results](Screenshots/dirb_subdomains.png)
 
 Several interesting paths were discovered:
 
@@ -76,7 +76,7 @@ key-1-of-3.txt
 fsocity.dic
 ```
 
-![Robots File](Screenshots/robots.png)
+![Robots File](Screenshots/robot_subdomain.png)
 
 The file `key-1-of-3.txt` contained the first flag.
 
@@ -89,6 +89,8 @@ The `/license` page contained the following encoded string:
 ```text
 ZWxsaW90OkVSMjgtMDY1Mgo=
 ```
+
+![License Page](Screenshots/license_subdomain.png)
 
 The string appeared to be Base64 encoded because it ended with "=" padding characters.
 
@@ -104,7 +106,7 @@ Output:
 elliot:ER28-0652
 ```
 
-![License Page](Screenshots/license.png)
+![License Page](Screenshots/base64_decode.png)
 
 The decoded value provided valid WordPress credentials.
 
@@ -123,6 +125,40 @@ Password: ER28-0652
 
 After logging in, we gained administrator access.
 
+---
+## Alternative Path: WordPress Brute Force
+
+Another possible approach is to perform a WordPress brute-force attack using the wordlist discovered during enumeration.
+
+The `robots.txt` file exposed the `fsocity.dic` wordlist, which can be downloaded from the target server.
+
+### Download the Wordlist
+
+```bash
+wget http://<TARGET_IP>/fsocity.dic
+```
+
+### Enumerating Valid Usernames
+
+The WordPress login page responds differently when a valid or invalid username is entered. This behavior can be used to identify existing users.
+
+WPScan can also enumerate WordPress usernames automatically:
+
+```bash
+wpscan --url http://<TARGET_IP> --enumerate u
+```
+
+After identifying a valid username, use the discovered wordlist to perform a password attack:
+
+```bash
+wpscan --url http://<TARGET_IP> -U <VALID_USERNAME> -P fsocity.dic
+```
+
+![WPScan Results](Screenshots/wpscan.png)
+
+If successful, WPScan will reveal valid credentials that can be used to access the WordPress administration panel.
+
+> **Note:** In this walkthrough, the credentials were obtained from the Base64-encoded string found on the `/license` page, making brute force unnecessary. However, username enumeration followed by a password attack is another valid path to solve the room.
 ---
 
 ## Obtaining Remote Code Execution
