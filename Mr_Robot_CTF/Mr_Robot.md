@@ -65,6 +65,10 @@ then we have an admin permission so we can go directly to appearance editor them
 ![img](Screenshots/)
 
 now write a reverse shell can make connect by it to the server 
+```bash
+locate reverse-shell
+```
+
 you can find a reverse shell code in the kali at path : /usr/share/webshells/php/php-reverse-shell.php
 ```bash
 cat /usr/share/webshells/php/php-reverse-shell.php
@@ -101,4 +105,8 @@ this line " python -c'import pty ; pty.spawn("/bin/bash")' " to appear the comma
 
 you have now a root privilege search to the keys(falgs)
 
+```bash
+find / -name "key-*-of-3.com 2>/dev/null
+```
 
+![img](Screenshots/)
