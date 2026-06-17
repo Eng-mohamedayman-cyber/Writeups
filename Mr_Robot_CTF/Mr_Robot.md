@@ -184,7 +184,7 @@ Open:
 * Theme directories are predictable.
 * The shell can be triggered by visiting a non-existent page.
 
-![Theme Editor](Screenshots/theme-editor.png)
+![Theme Editor](Screenshots/appearance_theme_404.png)
 
 ---
 
@@ -195,6 +195,8 @@ Kali Linux contains a PHP reverse shell:
 ```bash
 locate php-reverse-shell.php
 ```
+
+![Reverse Shell Code](Screenshots/reverse_shell.png)
 
 Path:
 
@@ -219,7 +221,7 @@ $port = <PORT>;
 
 Save the file.
 
-![Reverse Shell Code](Screenshots/reverse-shell-code.png)
+![Reverse Shell Code](Screenshots/paste_reverseshell.png)
 
 ---
 
@@ -237,7 +239,7 @@ Trigger the reverse shell by visiting any non-existent page:
 http://<TARGET_IP>/randompage
 ```
 
-![Netcat Listener](Screenshots/netcat.png)
+![Netcat Listener](Screenshots/internal_system.png)
 
 A reverse shell connection should be received.
 
@@ -277,7 +279,7 @@ Among the results:
 /usr/local/bin/nmap
 ```
 
-![SUID Enumeration](Screenshots/suid.png)
+![SUID Enumeration](Screenshots/search_privesc.png)
 
 The machine contained an old vulnerable version of Nmap.
 
@@ -309,7 +311,7 @@ Output:
 uid=0(root) gid=0(root)
 ```
 
-![Root Shell](Screenshots/root-shell.png)
+![Root Shell](Screenshots/get_root.png)
 
 Root privileges were successfully obtained.
 
