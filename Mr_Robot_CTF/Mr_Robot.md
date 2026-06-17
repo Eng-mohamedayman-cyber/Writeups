@@ -142,6 +142,8 @@ wget http://<TARGET_IP>/fsocity.dic
 
 The WordPress login page responds differently when a valid or invalid username is entered. This behavior can be used to identify existing users.
 
+![Reverse Shell Code](Screenshots/login_page.png)
+
 WPScan can also enumerate WordPress usernames automatically:
 
 ```bash
