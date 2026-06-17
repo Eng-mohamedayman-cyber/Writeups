@@ -9,4 +9,8 @@ we found 3 port open :
 * *80 --> http*
 * *443 --> https*
 
-![img](
+![img](Screenshots/)
+
+get the ip and open the firefox browser, and if can get any useful thing
+
+
