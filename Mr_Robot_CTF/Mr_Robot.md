@@ -13,4 +13,7 @@ we found 3 port open :
 
 get the ip and open the firefox browser, and if can get any useful thing
 
+we find only record message and videos
+
+find subdomans of this ip :
 
