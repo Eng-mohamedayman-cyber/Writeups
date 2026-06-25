@@ -35,7 +35,7 @@ After opening the target in a browser, the homepage displayed only a image and a
 
 ![Homepage](screenshots/website_target.png)
 
-we see an ambogies sentince "Follow the White Rabbit".
+we see an ambiguous sentence "Follow the White Rabbit".
 
 ### Directory Enumeration
 
@@ -94,7 +94,7 @@ we can use python3.6 by user rabbit without password
 
 now how to exploit :
 Read file "/home/alice/walrus_and_the_carpenter.py" at first. 
-at first line can see "import random" this is very important thing because when python import liberary that search at first at the same path "/home/alice/???"
+at first line can see "import random" this is very important thing because when python import library that search at first at the same path "/home/alice/???"
 
 ![img](screenshots/Import_Random.png)
 
@@ -119,7 +119,7 @@ sudo -u rabbit /usr/bin/python3.6 /home/alice/walrus_and_the_carpenter.py
 
 ![img](screenshots/Rabbit_user.png)
 
-have a shell with as rabbit user but this is also low permision
+have a shell with as rabbit user but this is also low permission
 continue
 
 we find a file have SUID permision at path "/home/rabbit" with name "teaParty"
@@ -154,11 +154,11 @@ cd /home/rabbit
 ./teaParty
 ```
 
-have a shell with as hatter user but this is also not high permision
+have a shell with as hatter user but this is also not high permission
 
 ![img](screenshots/hatter_User.png)
 
-go to path "/home/hatter" and see file and directry, I'm finding a file with name "password.txt" it cotain a password of hatter user
+go to path "/home/hatter" and see file and directry, I'm finding a file with name "password.txt" it contain a password of hatter user
 password = "WhyIsARavenLikeAWritingDesk?"
 
 ![img](screenshots/passwd_hatter.png)
