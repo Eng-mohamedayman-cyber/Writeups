@@ -52,10 +52,16 @@ Several interesting paths were discovered:
 ```text
 /r
 ```
-if repated
+
+if repated this url with add subdomain /r then /a the char of word rabbit in the same sort we will get : http://<TARGET_IP>/r/a/b/b/i/t
+then open the source code of this page; I'm finding a username and password for account
+
+![img](Screenshots/fvf)
+
 Alternatively:
 
 ```bash
 dirb http://<TARGET_IP>
 ```
 ---
+
