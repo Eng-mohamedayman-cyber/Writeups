@@ -13,7 +13,7 @@ The first step was to identify the open services running on the target machine.
 ### Nmap Scan
 
 ```bash
-nmap -sV <TARGET_IP>
+sudo nmap -sS -sV <TARGET_IP>
 ````
 
 The scan revealed three open ports:
