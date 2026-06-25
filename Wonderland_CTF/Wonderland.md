@@ -148,6 +148,7 @@ cd /home/rabbit
 ./teaParty
 ```
 
+have a shell with as hatter user but this is also not high permision
 
 
 ---
