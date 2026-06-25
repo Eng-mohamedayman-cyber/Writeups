@@ -14,7 +14,7 @@ The first step was to identify the open services running on the target machine.
 
 ```bash
 sudo nmap -sS -sV <TARGET_IP>
-````
+```
 
 The scan revealed three open ports:
 
@@ -191,6 +191,8 @@ final we be a root
 get flags
 
 ![img](screenshots/getflag.png)
+> **Note (The Wonderland Twist):** 
+> True to the "Alice in Wonderland" theme where everything is backward, the flags were reversed! The `user.txt` flag was located in the `/root` directory, while the `root.txt` flag was found back in `/home/alice`.
 
 
 ---
