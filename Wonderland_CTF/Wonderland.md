@@ -23,7 +23,7 @@ The scan revealed three open ports:
 | 22   | SSH     |
 | 80   | HTTP    |
 
-![Nmap Scan](Screenshots/Scan_Network_Nmap.png)
+![Nmap Scan](screenshots/Nmap_Result.png)
 
 Since web services were available, the next step was to investigate the website.
 
@@ -33,7 +33,7 @@ Since web services were available, the next step was to investigate the website.
 
 After opening the target in a browser, the homepage displayed only a image and a message.
 
-![Homepage](Screenshots/http_Of_IP.png)
+![Homepage](screenshots/website_target.png)
 
 we see an ambogies sentince "Follow the White Rabbit".
 
@@ -45,7 +45,7 @@ We used gobuster to enumerate hidden directories:
 gobuster dir -u http://<TARGET_IP> -w /usr/share/wordlists/dirb/common.txt
 ```
 
-![Dirb Results](Screenshots/dirb_subdomains.png)
+![Dirb Results](screenshots/gobuster_result.png)
 
 Several interesting paths were discovered:
 
@@ -56,7 +56,7 @@ Several interesting paths were discovered:
 if repated this url with add subdomain /r then /a the char of word rabbit in the same sort we will get : http://<TARGET_IP>/r/a/b/b/i/t
 then open the source code of this page; I'm finding a username and password for account
 
-![img](Screenshots/fvf)
+![img](screenshots/User_And_passwd.png)
 
 Alternatively:
 
@@ -74,7 +74,7 @@ ssh alice@<TARGET_IP>
 password : HowDothTheLittleCrocodileImproveHisShiningTail
 ```
 
-![img](Screenshots/fvf)
+![img](screenshots/login_ssh.png)
 
 ----
 
@@ -90,11 +90,13 @@ Thing useful was found.
     (rabbit) /usr/bin/python3.6 /home/alice/walrus_and_the_carpenter.py
 we can use python3.6 by user rabbit without password
 
-![img](Screenshots/fvf)
+![img](screenshots/sudo-l.png)
 
 now how to exploit :
 Read file "/home/alice/walrus_and_the_carpenter.py" at first. 
 at first line can see "import random" this is very important thing because when python import liberary that search at first at the same path "/home/alice/???"
+
+![img](screenshots/Import_Random.png)
 
 so create file with same name type python 
 
@@ -115,6 +117,8 @@ now make run to the file /home/alice/walrus_and_the_carpenter.py
 sudo -u rabbit /usr/bin/python3.6 /home/alice/walrus_and_the_carpenter.py
 ```
 
+![img](screenshots/Rabbit_user.png)
+
 have a shell with as rabbit user but this is also low permision
 continue
 
@@ -122,11 +126,13 @@ we find a file have SUID permision at path "/home/rabbit" with name "teaParty"
 try to read it by "cat" but nothing useful can understanding, try with methods such as "strings" but is not install.
 so i search and find this command to read this file
 
+![img](screenshots/file_SUID.png)
+
 ```bash
 awk 'BEGIN {FS="[^[:print:]]+"} {for(i=1;i<=NF;i++) if(length($i)>=4) print $i}' teaParty
 ```
 
-![img](Screenshots/fvf)
+![img](screenshots/date_withoutPath.png)
 
 this is important line 
 " /bin/echo -n 'Probably by ' && date --date='next hour' -R "
@@ -150,12 +156,12 @@ cd /home/rabbit
 
 have a shell with as hatter user but this is also not high permision
 
-![img](Screenshots/fvf)
+![img](screenshots/hatter_User.png)
 
 go to path "/home/hatter" and see file and directry, I'm finding a file with name "password.txt" it cotain a password of hatter user
 password = "WhyIsARavenLikeAWritingDesk?"
 
-![img](Screenshots/fvf)
+![img](screenshots/passwd_hatter.png)
 
 try by 
 
@@ -164,7 +170,7 @@ sudo -l
 getcap -r / 2>/dev/null
 ```
 
-![img](Screenshots/fvf)
+![img](screenshots/getcap.png)
 
 result have two service with "cap_setuid+ep" can use it 
 we will exploit by the "/usr/bin/perl"
@@ -174,19 +180,17 @@ we will exploit by the "/usr/bin/perl"
 ```
 
 if get "bash: /usr/bin/perl: Permission denied"
-
-![img](Screenshots/fvf)
-
 reconnect by ssh as user hatter (password we found)
 
-![img](Screenshots/fvf)
+![img](screenshots/getroot.png)
 
 final we be a root 
+
 ---
 
 get flags
 
-![img](Screenshots/fvf)
+![img](screenshots/getflag.png)
 
 
 ---
