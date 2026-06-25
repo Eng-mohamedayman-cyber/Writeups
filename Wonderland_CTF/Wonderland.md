@@ -76,5 +76,38 @@ password : HowDothTheLittleCrocodileImproveHisShiningTail
 
 ![img](Screenshots/fvf)
 
+----
+
+## Privilege Escalation
+
+Check sudo permissions:
+
+```bash
+sudo -l
+```
+
+Thing useful was found.
+    (rabbit) /usr/bin/python3.6 /home/alice/walrus_and_the_carpenter.py
+we can use python3.6 by user rabbit without password
+
+![img](Screenshots/fvf)
+
+now how to exploit :
+Read file "/home/alice/walrus_and_the_carpenter.py" at first. 
+at first line can see "import random" this is very important thing because when python import liberary that search at first at the same path "/home/alice/???"
+
+so create file with same name type python 
+
+```bash
+nano random.py
+```
+
+the exploit code inside it 
+
+```python
+import os
+os.system("/bin/bash")
+```
 
 
+---
