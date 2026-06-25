@@ -65,3 +65,16 @@ dirb http://<TARGET_IP>
 ```
 ---
 
+## connect by SSH
+
+after get the username and password 
+
+```bash
+ssh alice@<TARGET_IP>
+password : HowDothTheLittleCrocodileImproveHisShiningTail
+```
+
+![img](Screenshots/fvf)
+
+
+
