@@ -179,6 +179,14 @@ if get "bash: /usr/bin/perl: Permission denied"
 
 reconnect by ssh as user hatter (password we found)
 
+![img](Screenshots/fvf)
+
+final we be a root 
+---
+
+get flags
+
+![img](Screenshots/fvf)
 
 
 ---
